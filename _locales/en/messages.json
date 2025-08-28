@@ -1,0 +1,50 @@
+{
+  "appName": {
+    "message": "GhostOnTheSearchBar",
+    "description": "Extension name"
+  },
+  "appDescription": {
+    "message": "Drag to specify text for quick Google search. Works with multiple words too.",
+    "description": "Extension description"
+  },
+  "searchPlaceholder": {
+    "message": "Enter search terms...",
+    "description": "Search input placeholder"
+  },
+  "searchButton": {
+    "message": "Search",
+    "description": "Search button text"
+  },
+  "closeButton": {
+    "message": "Close",
+    "description": "Close button text"
+  },
+  "dragHandle": {
+    "message": "Drag to move",
+    "description": "Drag handle text"
+  },
+  "wheelUpHint": {
+    "message": "Scroll up to add to search bar",
+    "description": "Wheel up hint text"
+  },
+  "wheelDownHint": {
+    "message": "Scroll down to search immediately",
+    "description": "Wheel down hint text"
+  },
+  "upDragHint": {
+    "message": "Drag up to add to search bar",
+    "description": "Up drag hint text"
+  },
+  "searchBarTitle": {
+    "message": "Ghost Search Bar",
+    "description": "Search bar title"
+  },
+  "addToSearchBar": {
+    "message": "Add to search bar",
+    "description": "Add to search bar action"
+  },
+  "searchImmediately": {
+    "message": "Search immediately",
+    "description": "Search immediately action"
+  }
+}
