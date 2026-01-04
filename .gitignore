@@ -1,0 +1,36 @@
+# Chrome拡張機能の一時ファイル
+*.crx
+*.pem
+
+# システムファイル
+.DS_Store
+Thumbs.db
+
+# エディタファイル
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ログファイル
+*.log
+
+# 一時ファイル
+*.tmp
+*.temp
+
+# バックアップファイル
+*.bak
+*.backup
+
+# パッケージファイル
+node_modules/
+package-lock.json
+yarn.lock
+
+# 環境設定ファイル
+.env
+.env.local
+.env.production
+
+

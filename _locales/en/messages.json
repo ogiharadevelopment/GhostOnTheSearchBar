@@ -1,0 +1,194 @@
+{
+  "appName": {
+    "message": "GhostOnTheSearchBar",
+    "description": "Extension name"
+  },
+  "appDescription": {
+    "message": "Drag to specify text for quick search. Switch between Google, Bing, Yahoo!, Ecosia instantly. Works with multiple words too.",
+    "description": "Extension description"
+  },
+  "searchPlaceholder": {
+    "message": "Enter search terms...",
+    "description": "Search input placeholder"
+  },
+  "searchButton": {
+    "message": "Search",
+    "description": "Search button text"
+  },
+  "closeButton": {
+    "message": "Close",
+    "description": "Close button text"
+  },
+  "dragHandle": {
+    "message": "Drag to move",
+    "description": "Drag handle text"
+  },
+  "wheelUpHint": {
+    "message": "Scroll up to add to search bar",
+    "description": "Wheel up hint text"
+  },
+  "wheelDownHint": {
+    "message": "Scroll down to search immediately",
+    "description": "Wheel down hint text"
+  },
+  "upDragHint": {
+    "message": "Drag up to add to search bar",
+    "description": "Up drag hint text"
+  },
+  "searchBarTitle": {
+    "message": "GhostSearchBar",
+    "description": "Search bar title"
+  },
+  "addToSearchBar": {
+    "message": "Add to search bar",
+    "description": "Add to search bar action"
+  },
+  "searchImmediately": {
+    "message": "Search immediately",
+    "description": "Search immediately action"
+  },
+  "popupTitle": {
+    "message": "Ghost Search",
+    "description": "Popup title"
+  },
+  "popupSubtitle": {
+    "message": "Quick search for selected text",
+    "description": "Popup subtitle"
+  },
+  "settings": {
+    "message": "Settings",
+    "description": "Settings section title"
+  },
+  "enableExtension": {
+    "message": "Enable extension",
+    "description": "Enable extension checkbox"
+  },
+  "autoHide": {
+    "message": "Auto hide",
+    "description": "Auto hide checkbox"
+  },
+  "searchEngine": {
+    "message": "Search Engine:",
+    "description": "Search engine selection label"
+  },
+  "theme": {
+    "message": "Theme:",
+    "description": "Theme selection label"
+  },
+  "themeAuto": {
+    "message": "Auto",
+    "description": "Auto theme option"
+  },
+  "themeLight": {
+    "message": "Light",
+    "description": "Light theme option"
+  },
+  "themeDark": {
+    "message": "Dark",
+    "description": "Dark theme option"
+  },
+  "usage": {
+    "message": "How to Use",
+    "description": "Usage section title"
+  },
+  "usageStep1": {
+    "message": "Drag to select text on the page",
+    "description": "Usage step 1"
+  },
+  "usageStep2": {
+    "message": "Search toolbar will appear automatically",
+    "description": "Usage step 2"
+  },
+  "usageStep3": {
+    "message": "Click \"Google Search\" to search directly, or \"Add to Search Bar\" to add to existing search bar",
+    "description": "Usage step 3"
+  },
+  "statistics": {
+    "message": "Statistics",
+    "description": "Statistics section title"
+  },
+  "totalSearches": {
+    "message": "Total Searches",
+    "description": "Total searches label"
+  },
+  "totalAdditions": {
+    "message": "Search Bar Additions",
+    "description": "Search bar additions label"
+  },
+  "resetStats": {
+    "message": "Reset Statistics",
+    "description": "Reset statistics button"
+  },
+  "exportSettings": {
+    "message": "Export Settings",
+    "description": "Export settings button"
+  },
+  "extensionTitle": {
+    "message": "GhostOnTheSearchBar",
+    "description": "Extension title"
+  },
+  "settingsTitle": {
+    "message": "GhostOnTheSearchBar Settings",
+    "description": "Settings page title"
+  },
+  "keyShortcutsSettings": {
+    "message": "Key Shortcuts Settings",
+    "description": "Key shortcuts settings section title"
+  },
+  "keyShortcutsDescription": {
+    "message": "Configure which search engine or site corresponds to each key.",
+    "description": "Key shortcuts settings description"
+  },
+  "otherSettings": {
+    "message": "Other Settings",
+    "description": "Other settings section title"
+  },
+  "defaultSearchEngine": {
+    "message": "Default Search Engine:",
+    "description": "Default search engine label"
+  },
+  "wheelScrollSearchEngine": {
+    "message": "Wheel Scroll Search Engine:",
+    "description": "Wheel scroll search engine label"
+  },
+  "enableExtensionCheckbox": {
+    "message": "Enable extension",
+    "description": "Enable extension checkbox"
+  },
+  "saveButton": {
+    "message": "Save",
+    "description": "Save button"
+  },
+  "resetButton": {
+    "message": "Reset",
+    "description": "Reset button"
+  },
+  "notSet": {
+    "message": "Not Set",
+    "description": "Not set option"
+  },
+  "selectPlease": {
+    "message": "Please select",
+    "description": "Please select option"
+  },
+  "settingsSaved": {
+    "message": "Settings saved",
+    "description": "Settings save success message"
+  },
+  "settingsSaveFailed": {
+    "message": "Failed to save settings",
+    "description": "Settings save failed message"
+  },
+  "resetConfirm": {
+    "message": "Reset settings?",
+    "description": "Reset confirmation message"
+  },
+  "settingsReset": {
+    "message": "Settings reset",
+    "description": "Settings reset success message"
+  },
+  "settingsResetFailed": {
+    "message": "Failed to reset settings",
+    "description": "Settings reset failed message"
+  }
+}

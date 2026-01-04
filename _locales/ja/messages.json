@@ -1,0 +1,194 @@
+{
+  "appName": {
+    "message": "GhostOnTheSearchBar",
+    "description": "拡張機能名"
+  },
+  "appDescription": {
+    "message": "ドラッグで指定した文章で素早く検索。Google、Bing、Yahoo！、Ecosiaをノータイムで選択。複数単語でも",
+    "description": "拡張機能の説明"
+  },
+  "searchPlaceholder": {
+    "message": "検索ワードを入力...",
+    "description": "検索入力フィールドのプレースホルダー"
+  },
+  "searchButton": {
+    "message": "検索",
+    "description": "検索ボタンのテキスト"
+  },
+  "closeButton": {
+    "message": "閉じる",
+    "description": "閉じるボタンのテキスト"
+  },
+  "dragHandle": {
+    "message": "ドラッグで移動",
+    "description": "ドラッグハンドルのテキスト"
+  },
+  "wheelUpHint": {
+    "message": "上スクロールで検索バーに追加",
+    "description": "ホイール上スクロールのヒント"
+  },
+  "wheelDownHint": {
+    "message": "下スクロールで即座検索",
+    "description": "ホイール下スクロールのヒント"
+  },
+  "upDragHint": {
+    "message": "上ドラッグで検索バーに追加",
+    "description": "上ドラッグのヒント"
+  },
+  "searchBarTitle": {
+    "message": "GhostSearchBar",
+    "description": "検索バーのタイトル"
+  },
+  "addToSearchBar": {
+    "message": "検索バーに追加",
+    "description": "検索バーに追加するアクション"
+  },
+  "searchImmediately": {
+    "message": "即座に検索",
+    "description": "即座に検索するアクション"
+  },
+  "popupTitle": {
+    "message": "Ghost Search",
+    "description": "ポップアップのタイトル"
+  },
+  "popupSubtitle": {
+    "message": "選択したテキストを素早く検索",
+    "description": "ポップアップのサブタイトル"
+  },
+  "settings": {
+    "message": "設定",
+    "description": "設定セクションのタイトル"
+  },
+  "enableExtension": {
+    "message": "拡張機能を有効にする",
+    "description": "拡張機能有効化のチェックボックス"
+  },
+  "autoHide": {
+    "message": "自動的に非表示にする",
+    "description": "自動非表示のチェックボックス"
+  },
+  "searchEngine": {
+    "message": "検索エンジン:",
+    "description": "検索エンジン選択のラベル"
+  },
+  "theme": {
+    "message": "テーマ:",
+    "description": "テーマ選択のラベル"
+  },
+  "themeAuto": {
+    "message": "自動",
+    "description": "自動テーマのオプション"
+  },
+  "themeLight": {
+    "message": "ライト",
+    "description": "ライトテーマのオプション"
+  },
+  "themeDark": {
+    "message": "ダーク",
+    "description": "ダークテーマのオプション"
+  },
+  "usage": {
+    "message": "使い方",
+    "description": "使用方法セクションのタイトル"
+  },
+  "usageStep1": {
+    "message": "ページ内でテキストをドラッグして選択",
+    "description": "使用方法ステップ1"
+  },
+  "usageStep2": {
+    "message": "検索ツールバーが自動的に表示されます",
+    "description": "使用方法ステップ2"
+  },
+  "usageStep3": {
+    "message": "「Google検索」で直接検索、または「検索バーに追加」で既存の検索バーに追加",
+    "description": "使用方法ステップ3"
+  },
+  "statistics": {
+    "message": "統計",
+    "description": "統計セクションのタイトル"
+  },
+  "totalSearches": {
+    "message": "総検索回数",
+    "description": "総検索回数のラベル"
+  },
+  "totalAdditions": {
+    "message": "検索バー追加回数",
+    "description": "検索バー追加回数のラベル"
+  },
+  "resetStats": {
+    "message": "統計をリセット",
+    "description": "統計リセットボタン"
+  },
+  "exportSettings": {
+    "message": "設定をエクスポート",
+    "description": "設定エクスポートボタン"
+  },
+  "extensionTitle": {
+    "message": "GhostOnTheSearchBar",
+    "description": "拡張機能のタイトル"
+  },
+  "settingsTitle": {
+    "message": "GhostOnTheSearchBar 設定",
+    "description": "設定画面のタイトル"
+  },
+  "keyShortcutsSettings": {
+    "message": "キーショートカット設定",
+    "description": "キーショートカット設定セクションのタイトル"
+  },
+  "keyShortcutsDescription": {
+    "message": "各キーに対応する検索エンジン・サイトを設定できます。",
+    "description": "キーショートカット設定の説明"
+  },
+  "otherSettings": {
+    "message": "その他の設定",
+    "description": "その他の設定セクションのタイトル"
+  },
+  "defaultSearchEngine": {
+    "message": "既定の検索エンジン:",
+    "description": "既定の検索エンジンのラベル"
+  },
+  "wheelScrollSearchEngine": {
+    "message": "ホイールスクロール時の検索エンジン:",
+    "description": "ホイールスクロール時の検索エンジンのラベル"
+  },
+  "enableExtensionCheckbox": {
+    "message": "拡張機能を有効にする",
+    "description": "拡張機能有効化のチェックボックス"
+  },
+  "saveButton": {
+    "message": "保存",
+    "description": "保存ボタン"
+  },
+  "resetButton": {
+    "message": "リセット",
+    "description": "リセットボタン"
+  },
+  "notSet": {
+    "message": "未設定",
+    "description": "未設定のオプション"
+  },
+  "selectPlease": {
+    "message": "選択してください",
+    "description": "選択してくださいのオプション"
+  },
+  "settingsSaved": {
+    "message": "設定を保存しました",
+    "description": "設定保存成功メッセージ"
+  },
+  "settingsSaveFailed": {
+    "message": "設定の保存に失敗しました",
+    "description": "設定保存失敗メッセージ"
+  },
+  "resetConfirm": {
+    "message": "設定をリセットしますか？",
+    "description": "リセット確認メッセージ"
+  },
+  "settingsReset": {
+    "message": "設定をリセットしました",
+    "description": "設定リセット成功メッセージ"
+  },
+  "settingsResetFailed": {
+    "message": "設定のリセットに失敗しました",
+    "description": "設定リセット失敗メッセージ"
+  }
+}
