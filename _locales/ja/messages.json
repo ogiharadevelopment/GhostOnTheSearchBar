@@ -4,7 +4,7 @@
     "description": "拡張機能名"
   },
   "appDescription": {
-    "message": "ドラッグで指定した文章で素早く検索。Google、Bing、Yahoo！、Ecosiaをノータイムで選択。複数単語でも",
+    "message": "Ecosia,Google,DuckDuckGo,Wikipedia,YouTube,Quora,Redditなど。数十の選択肢にワンアクションでアクセス。",
     "description": "拡張機能の説明"
   },
   "searchPlaceholder": {
