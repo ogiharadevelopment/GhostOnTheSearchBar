@@ -382,12 +382,12 @@
 
 .suggestion-item:hover,
 .suggestion-item.active {
-  background: #4a5568;
-  color: #ffffff;
+  background: #4a90e2 !important;
+  color: #ffffff !important;
 }
 
 .suggestion-item:hover {
-  background: #5a6578;
+  background: #4a90e2 !important;
 }
 
 /* 個別単語のスタイル */
@@ -708,8 +708,8 @@
 }
 
 .history-item:hover {
-  background: #4a5568;
-  color: #ffffff;
+  background: #4a90e2 !important;
+  color: #ffffff !important;
 }
 
 .history-query {

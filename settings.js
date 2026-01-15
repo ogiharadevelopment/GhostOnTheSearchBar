@@ -85,29 +85,33 @@ class SettingsManager {
       
       // キーショートカット設定を読み込み
       if (result.ghostKeyShortcuts) {
-        this.currentShortcuts = result.ghostKeyShortcuts;
+        // 後方互換性: 文字列を配列に変換
+        this.currentShortcuts = {};
+        Object.entries(result.ghostKeyShortcuts).forEach(([key, value]) => {
+          this.currentShortcuts[key] = Array.isArray(value) ? value : [value];
+        });
       } else {
         // デフォルト設定
         this.currentShortcuts = {
-          'y': 'youtube',
-          'w': 'wikipedia',
-          'g': 'google',
-          'b': 'bing',
-          'a': 'amazon',
-          't': 'twitter',
-          'r': 'reddit',
-          'n': 'note',
-          'q': 'quora',
-          'z': 'zenn',
-          'p': 'pixiv',
-          'c': 'chiebukuro',
-          'm': 'googlemaps',
-          'h': 'github',
-          's': 'stackoverflow',
-          'i': 'instagram',
-          'f': 'facebook',
-          'u': 'bluesky',
-          'e': 'ecosia'
+          'y': ['youtube'],
+          'w': ['wikipedia'],
+          'g': ['google'],
+          'b': ['bing'],
+          'a': ['amazon'],
+          't': ['twitter'],
+          'r': ['reddit'],
+          'n': ['note'],
+          'q': ['quora'],
+          'z': ['zenn'],
+          'p': ['pixiv'],
+          'c': ['chiebukuro'],
+          'm': ['googlemaps'],
+          'h': ['github'],
+          's': ['stackoverflow'],
+          'i': ['instagram'],
+          'f': ['facebook'],
+          'u': ['bluesky'],
+          'e': ['ecosia']
         };
       }
       
@@ -132,20 +136,112 @@ class SettingsManager {
       const item = document.createElement('div');
       item.className = 'shortcut-item';
       
-      const currentEngine = this.currentShortcuts[key] || '';
+      const currentEngines = this.currentShortcuts[key] || [];
       
-      item.innerHTML = `
-        <span class="shortcut-key">${key.toUpperCase()}</span>
-        <select class="shortcut-select" data-key="${key}">
-          <option value="">${i18n('notSet')}</option>
-          ${Object.entries(availableEngines).map(([id, engine]) => 
-            `<option value="${id}" ${currentEngine === id ? 'selected' : ''}>${engine.icon} ${engine.name}</option>`
-          ).join('')}
-        </select>
-      `;
+      // キー表示
+      const keySpan = document.createElement('span');
+      keySpan.className = 'shortcut-key';
+      keySpan.textContent = key.toUpperCase();
+      
+      // エンジン選択エリア
+      const engineArea = document.createElement('div');
+      engineArea.className = 'engine-select-area';
+      
+      // 選択されたエンジンのタグ表示エリア
+      const tagsContainer = document.createElement('div');
+      tagsContainer.className = 'engine-tags-container';
+      currentEngines.forEach(engineId => {
+        if (availableEngines[engineId]) {
+          const tag = document.createElement('span');
+          tag.className = 'engine-tag';
+          tag.dataset.engineId = engineId;
+          tag.innerHTML = `
+            <span class="engine-tag-icon">${availableEngines[engineId].icon}</span>
+            <span class="engine-tag-name">${availableEngines[engineId].name}</span>
+            <span class="engine-tag-remove">×</span>
+          `;
+          
+          tag.querySelector('.engine-tag-remove').addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.removeEngine(key, engineId);
+          });
+          
+          tagsContainer.appendChild(tag);
+        }
+      });
+      
+      // 追加ボタン（ドロップダウン）
+      const addButton = document.createElement('button');
+      addButton.className = 'engine-add-btn';
+      addButton.textContent = '+';
+      addButton.title = '検索エンジンを追加';
+      
+      const dropdown = document.createElement('div');
+      dropdown.className = 'engine-dropdown';
+      
+      // 未選択のエンジンのみ表示
+      Object.entries(availableEngines).forEach(([id, engine]) => {
+        if (!currentEngines.includes(id)) {
+          const option = document.createElement('div');
+          option.className = 'engine-dropdown-item';
+          option.dataset.engineId = id;
+          option.innerHTML = `<span class="engine-icon">${engine.icon}</span> <span>${engine.name}</span>`;
+          option.addEventListener('click', () => {
+            this.addEngine(key, id);
+            dropdown.classList.remove('show');
+          });
+          dropdown.appendChild(option);
+        }
+      });
+      
+      if (dropdown.children.length === 0) {
+        const emptyOption = document.createElement('div');
+        emptyOption.className = 'engine-dropdown-item empty';
+        emptyOption.textContent = 'すべて選択済み';
+        dropdown.appendChild(emptyOption);
+      }
+      
+      addButton.addEventListener('click', (e) => {
+        e.stopPropagation();
+        dropdown.classList.toggle('show');
+      });
+      
+      // ドロップダウンを閉じる（外部クリック）
+      document.addEventListener('click', (e) => {
+        if (!engineArea.contains(e.target)) {
+          dropdown.classList.remove('show');
+        }
+      });
+      
+      engineArea.appendChild(tagsContainer);
+      engineArea.appendChild(addButton);
+      engineArea.appendChild(dropdown);
+      
+      item.appendChild(keySpan);
+      item.appendChild(engineArea);
       
       grid.appendChild(item);
     });
+  }
+
+  addEngine(key, engineId) {
+    if (!this.currentShortcuts[key]) {
+      this.currentShortcuts[key] = [];
+    }
+    if (!this.currentShortcuts[key].includes(engineId)) {
+      this.currentShortcuts[key].push(engineId);
+      this.renderShortcuts();
+    }
+  }
+
+  removeEngine(key, engineId) {
+    if (this.currentShortcuts[key]) {
+      this.currentShortcuts[key] = this.currentShortcuts[key].filter(id => id !== engineId);
+      if (this.currentShortcuts[key].length === 0) {
+        delete this.currentShortcuts[key];
+      }
+      this.renderShortcuts();
+    }
   }
 
   renderDefaultEngine() {
@@ -180,13 +276,12 @@ class SettingsManager {
 
   async saveSettings() {
     try {
-      // キーショートカット設定を収集
+      // キーショートカット設定を収集（配列形式で保存、単一の場合は配列のまま）
       const shortcuts = {};
-      document.querySelectorAll('.shortcut-select').forEach(select => {
-        const key = select.dataset.key;
-        const value = select.value;
-        if (value) {
-          shortcuts[key] = value;
+      Object.entries(this.currentShortcuts).forEach(([key, engines]) => {
+        if (engines.length > 0) {
+          // 単一エンジンの場合は文字列、複数の場合は配列（後方互換性のため）
+          shortcuts[key] = engines.length === 1 ? engines[0] : engines;
         }
       });
       
@@ -268,4 +363,3 @@ class SettingsManager {
 document.addEventListener('DOMContentLoaded', () => {
   new SettingsManager();
 });
-

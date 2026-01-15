@@ -86,19 +86,133 @@ body {
   font-size: 14px;
 }
 
-.shortcut-select {
+.engine-select-area {
   flex: 1;
-  padding: 8px 12px;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 4px;
   border: 1px solid #ddd;
   border-radius: 6px;
-  font-size: 14px;
   background: white;
 }
 
-.shortcut-select:focus {
-  outline: none;
+.engine-select-area:focus-within {
   border-color: #667eea;
   box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.engine-tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  flex: 1;
+}
+
+.engine-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  background: #667eea;
+  color: white;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: default;
+}
+
+.engine-tag-icon {
+  font-size: 14px;
+}
+
+.engine-tag-name {
+  font-weight: 500;
+}
+
+.engine-tag-remove {
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1;
+  padding-left: 4px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.engine-tag-remove:hover {
+  opacity: 1;
+}
+
+.engine-add-btn {
+  padding: 6px 12px;
+  border: 1px dashed #667eea;
+  border-radius: 4px;
+  background: white;
+  color: #667eea;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+  min-width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.engine-add-btn:hover {
+  background: #f0f0ff;
+  border-color: #5568d3;
+}
+
+.engine-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  margin-top: 4px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+  display: none;
+}
+
+.engine-dropdown.show {
+  display: block;
+}
+
+.engine-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.engine-dropdown-item:hover {
+  background: #f0f0ff;
+}
+
+.engine-dropdown-item.empty {
+  color: #999;
+  cursor: default;
+}
+
+.engine-dropdown-item.empty:hover {
+  background: white;
+}
+
+.engine-dropdown-item .engine-icon {
+  font-size: 16px;
 }
 
 .setting-item {
@@ -163,5 +277,7 @@ body {
 .reset-btn:hover {
   background: #d0d0d0;
 }
+
+
 
 

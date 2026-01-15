@@ -4,7 +4,7 @@
     "description": "拡張機能名"
   },
   "appDescription": {
-    "message": "Ecosia,Google,DuckDuckGo,Wikipedia,YouTube,Quora,Redditなど。数十の選択肢にワンアクションでアクセス。",
+    "message": "Googleなど８つの検索エンジンと、Wikipediaなど２０以上のサイト内検索機能にワンアクションでアクセス",
     "description": "拡張機能の説明"
   },
   "searchPlaceholder": {

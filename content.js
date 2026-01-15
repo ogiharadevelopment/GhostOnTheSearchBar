@@ -176,7 +176,7 @@ class GhostSearchBar {
       't': { name: 'Twitter', icon: '🐦', url: 'https://twitter.com/search?q={query}' },
       'r': { name: 'Reddit', icon: '🤖', url: 'https://www.reddit.com/search?q={query}' },
       'n': { name: 'note', icon: '📝', url: 'https://note.com/search?q={query}' },
-      'q': { name: 'Quora', icon: '💬', url: `https://www.quora.com/search?q={query}&lang=${lang}` },
+      'q': { name: 'Quora', icon: '💬', url: 'https://www.quora.com/search?q={query}' },
       'z': { name: 'Zenn', icon: '📖', url: 'https://zenn.dev/search?q={query}' },
       'p': { name: 'Pixiv', icon: '🎨', url: 'https://www.pixiv.net/tags/{query}' },
       'c': { name: 'Yahoo!知恵袋', icon: '💡', url: chiebukuroDomains[region] || chiebukuroDomains['JP'] },
@@ -1727,9 +1727,11 @@ class GhostSearchBar {
     this.currentSelectedEngine = wheelScrollKey;
     const wheelScrollShortcut = this.keyShortcuts[wheelScrollKey];
     if (wheelScrollShortcut) {
-      this.updateSearchBarTitle(wheelScrollShortcut.name);
-      this.updateEngineSelectorName(wheelScrollShortcut.name);
-      console.log('📋 GhostSearchBar: 検索エンジンを設定（予測変換）:', wheelScrollShortcut.name, 'キー:', wheelScrollKey);
+      const engines = Array.isArray(wheelScrollShortcut) ? wheelScrollShortcut : [wheelScrollShortcut];
+      const engineNames = engines.map(e => e.name).join(', ');
+      this.updateSearchBarTitle(engineNames);
+      this.updateEngineSelectorName(engineNames);
+      console.log('📋 GhostSearchBar: 検索エンジンを設定（予測変換）:', engineNames, 'キー:', wheelScrollKey);
     } else {
       this.updateSearchBarTitle();
       console.log('⚠️ GhostSearchBar: ホイールスクロール検索エンジンのキーショートカットが見つかりません');
@@ -1784,9 +1786,11 @@ class GhostSearchBar {
     // 検索エンジンをUIに反映
     const shortcut = this.keyShortcuts[engineKey];
     if (shortcut) {
-      this.updateSearchBarTitle(shortcut.name);
-      this.updateEngineSelectorName(shortcut.name);
-      console.log('📋 GhostSearchBar: 検索エンジンを設定:', shortcut.name, 'キー:', engineKey);
+      const engines = Array.isArray(shortcut) ? shortcut : [shortcut];
+      const engineNames = engines.map(e => e.name).join(', ');
+      this.updateSearchBarTitle(engineNames);
+      this.updateEngineSelectorName(engineNames);
+      console.log('📋 GhostSearchBar: 検索エンジンを設定:', engineNames, 'キー:', engineKey);
     } else {
       this.updateSearchBarTitle();
       console.log('⚠️ GhostSearchBar: 検索エンジンのキーショートカットが見つかりません:', engineKey);
@@ -1814,10 +1818,21 @@ class GhostSearchBar {
     const shortcut = this.keyShortcuts[wheelScrollKey];
     
     if (shortcut) {
-      const url = shortcut.url.replace('{query}', encodeURIComponent(searchText));
-      window.open(url, '_blank');
+      // 複数エンジンの場合はすべてで検索、単一エンジンの場合は1つで検索
+      const engines = Array.isArray(shortcut) ? shortcut : [shortcut];
+      engines.forEach((engine, index) => {
+        const url = engine.url.replace('{query}', encodeURIComponent(searchText));
+        if (index === 0) {
+          window.open(url, '_blank');
+        } else {
+          setTimeout(() => {
+            window.open(url, '_blank');
+          }, index * 100);
+        }
+      });
       this.saveSearchHistory(searchText, wheelScrollEngineId);
-      console.log('🚀 GhostSearchBar: ホイールスクロール検索エンジンで即座検索実行:', searchText, 'エンジン:', wheelScrollEngineId, 'キー:', wheelScrollKey);
+      const engineNames = engines.map(e => e.name).join(', ');
+      console.log('🚀 GhostSearchBar: ホイールスクロール検索エンジンで即座検索実行:', searchText, 'エンジン:', engineNames, 'キー:', wheelScrollKey);
     } else {
       // フォールバック: Google検索
       const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(searchText)}`;
@@ -1909,10 +1924,21 @@ class GhostSearchBar {
     const shortcut = this.keyShortcuts[selectedEngine];
     
     if (shortcut) {
-      const url = shortcut.url.replace('{query}', encodeURIComponent(searchText));
-      window.open(url, '_blank');
+      // 複数エンジンの場合はすべてで検索、単一エンジンの場合は1つで検索
+      const engines = Array.isArray(shortcut) ? shortcut : [shortcut];
+      engines.forEach((engine, index) => {
+        const url = engine.url.replace('{query}', encodeURIComponent(searchText));
+        if (index === 0) {
+          window.open(url, '_blank');
+        } else {
+          setTimeout(() => {
+            window.open(url, '_blank');
+          }, index * 100);
+        }
+      });
       
-      console.log('🔍 GhostSearchBar: 検索実行:', searchText, 'エンジン:', shortcut.name);
+      const engineNames = engines.map(e => e.name).join(', ');
+      console.log('🔍 GhostSearchBar: 検索実行:', searchText, 'エンジン:', engineNames);
       
       // 検索履歴に保存
       this.saveSearchHistory(searchText, selectedEngine);
@@ -2091,12 +2117,20 @@ class GhostSearchBar {
     
     // 設定されたキーショートカットを適用
     this.keyShortcuts = {};
-    Object.entries(shortcutsConfig).forEach(([key, engineId]) => {
-      if (engineDefinitions[engineId]) {
-        this.keyShortcuts[key] = engineDefinitions[engineId];
-        console.log(`🔄 GhostSearchBar: キーショートカット設定 - ${key} → ${engineId} (${engineDefinitions[engineId].name})`);
+    Object.entries(shortcutsConfig).forEach(([key, engineIdOrArray]) => {
+      // 配列形式と文字列形式の両方をサポート（後方互換性）
+      const engineIds = Array.isArray(engineIdOrArray) ? engineIdOrArray : [engineIdOrArray];
+      const engines = engineIds
+        .map(id => engineDefinitions[id])
+        .filter(engine => engine !== undefined);
+      
+      if (engines.length > 0) {
+        // 複数エンジンの場合は配列、単一エンジンの場合も配列で統一（互換性のため）
+        this.keyShortcuts[key] = engines.length === 1 ? engines[0] : engines;
+        const engineNames = engines.map(e => e.name).join(', ');
+        console.log(`🔄 GhostSearchBar: キーショートカット設定 - ${key} → ${engineIds.join(', ')} (${engineNames})`);
       } else {
-        console.log(`⚠️ GhostSearchBar: エンジン定義が見つかりません - ${key} → ${engineId}`);
+        console.log(`⚠️ GhostSearchBar: エンジン定義が見つかりません - ${key} → ${Array.isArray(engineIdOrArray) ? engineIdOrArray.join(', ') : engineIdOrArray}`);
       }
     });
     
@@ -2212,7 +2246,7 @@ class GhostSearchBar {
       'twitter': { name: 'Twitter', icon: '🐦', url: 'https://twitter.com/search?q={query}' },
       'reddit': { name: 'Reddit', icon: '🤖', url: 'https://www.reddit.com/search?q={query}' },
       'note': { name: 'note', icon: '📝', url: 'https://note.com/search?q={query}' },
-      'quora': { name: 'Quora', icon: '💬', url: `https://www.quora.com/search?q={query}&lang=${lang}` },
+      'quora': { name: 'Quora', icon: '💬', url: 'https://www.quora.com/search?q={query}' },
       'zenn': { name: 'Zenn', icon: '📖', url: 'https://zenn.dev/search?q={query}' },
       'pixiv': { name: 'Pixiv', icon: '🎨', url: 'https://www.pixiv.net/tags/{query}' },
       'chiebukuro': { name: 'Yahoo!知恵袋', icon: '💡', url: chiebukuroDomains[region] || chiebukuroDomains['JP'] },
@@ -2950,7 +2984,9 @@ class GhostSearchBar {
     // 初期表示名を設定
     const initialEngine = this.keyShortcuts[this.currentSelectedEngine];
     if (initialEngine) {
-      this.updateEngineSelectorName(initialEngine.name);
+      const engines = Array.isArray(initialEngine) ? initialEngine : [initialEngine];
+      const engineNames = engines.map(e => e.name).join(', ');
+      this.updateEngineSelectorName(engineNames);
     }
     
     // ドロップダウンの作成
@@ -3111,10 +3147,15 @@ class GhostSearchBar {
     console.log('🔄 GhostSearchBar: ドロップダウンに追加するキーショートカット数:', shortcutsEntries.length);
     
     shortcutsEntries.forEach(([key, shortcut]) => {
-      console.log(`🔄 GhostSearchBar: ドロップダウン項目作成 - キー: ${key}, エンジン: ${shortcut.name}`);
+      // 配列の場合は複数エンジン、単一の場合は1つ
+      const engines = Array.isArray(shortcut) ? shortcut : [shortcut];
+      const engineNames = engines.map(e => e.name).join(', ');
+      console.log(`🔄 GhostSearchBar: ドロップダウン項目作成 - キー: ${key}, エンジン: ${engineNames}`);
+      
       const item = document.createElement('div');
       item.className = 'engine-select-item';
-      if (shortcut.name === this.getCurrentEngineName()) {
+      const currentEngineNames = this.getCurrentEngineName();
+      if (engineNames === currentEngineNames) {
         item.classList.add('active');
       }
       
@@ -3123,8 +3164,9 @@ class GhostSearchBar {
       keySpan.className = 'engine-key';
       keySpan.textContent = key.toUpperCase();
       
-      // favicon URLを取得（エンジンIDから）
-      const engineId = this.getEngineIdByName(shortcut.name);
+      // 複数エンジンの場合は最初のエンジンのfaviconを使用
+      const firstEngine = engines[0];
+      const engineId = this.getEngineIdByName(firstEngine.name);
       const faviconUrl = faviconUrls[engineId] || '';
       
       // アイコン要素を作成
@@ -3135,7 +3177,7 @@ class GhostSearchBar {
         const faviconImg = document.createElement('img');
         faviconImg.src = faviconUrl;
         faviconImg.className = 'engine-favicon';
-        faviconImg.alt = shortcut.name;
+        faviconImg.alt = firstEngine.name;
         
         // エラー時のフォールバック（CSP対応）
         faviconImg.addEventListener('error', function() {
@@ -3149,21 +3191,21 @@ class GhostSearchBar {
         const fallbackSpan = document.createElement('span');
         fallbackSpan.className = 'engine-icon-fallback';
         fallbackSpan.style.display = 'none';
-        fallbackSpan.textContent = shortcut.icon;
+        fallbackSpan.textContent = firstEngine.icon;
         
         iconContainer.appendChild(faviconImg);
         iconContainer.appendChild(fallbackSpan);
       } else {
         const iconSpan = document.createElement('span');
         iconSpan.className = 'engine-icon';
-        iconSpan.textContent = shortcut.icon;
+        iconSpan.textContent = firstEngine.icon;
         iconContainer.appendChild(iconSpan);
       }
       
-      // 名前表示
+      // 名前表示（複数エンジンの場合はすべて表示）
       const nameSpan = document.createElement('span');
       nameSpan.className = 'engine-name';
-      nameSpan.textContent = shortcut.name;
+      nameSpan.textContent = engineNames;
       
       // 要素を組み立て
       item.appendChild(keySpan);
@@ -3229,11 +3271,13 @@ class GhostSearchBar {
     if (!shortcut) return;
     
     this.currentSelectedEngine = key;
-    this.updateSearchBarTitle(shortcut.name);
-    this.updateEngineSelectorName(shortcut.name);
+    const engines = Array.isArray(shortcut) ? shortcut : [shortcut];
+    const engineNames = engines.map(e => e.name).join(', ');
+    this.updateSearchBarTitle(engineNames);
+    this.updateEngineSelectorName(engineNames);
     this.updateEngineDropdown();
     
-    console.log('🔍 検索エンジン選択:', key, shortcut.name);
+    console.log('🔍 検索エンジン選択:', key, engineNames);
   }
   
   // 検索エンジン選択エリアの名前を更新
@@ -3673,13 +3717,26 @@ class GhostSearchBar {
     const shortcut = this.keyShortcuts[key];
     if (!shortcut || !text) return;
     
-    const url = shortcut.url.replace('{query}', encodeURIComponent(text));
-    window.open(url, '_blank');
+    // 配列の場合は複数の検索エンジンで同時検索
+    const engines = Array.isArray(shortcut) ? shortcut : [shortcut];
     
-    // 検索履歴に保存
+    engines.forEach((engine, index) => {
+      const url = engine.url.replace('{query}', encodeURIComponent(text));
+      // 最初のタブのみ通常、それ以降は少し遅延させてポップアップブロッカー対策
+      if (index === 0) {
+        window.open(url, '_blank');
+      } else {
+        setTimeout(() => {
+          window.open(url, '_blank');
+        }, index * 100);
+      }
+    });
+    
+    // 検索履歴に保存（最初のエンジンのみ）
     this.saveSearchHistory(text, key);
     
-    console.log('🔍 ショートカット検索実行（テキスト指定）:', key, shortcut.name, text);
+    const engineNames = engines.map(e => e.name).join(', ');
+    console.log('🔍 ショートカット検索実行（テキスト指定）:', key, engineNames, text, `(${engines.length}エンジン)`);
   }
   
   // ブラウザの言語を検出
